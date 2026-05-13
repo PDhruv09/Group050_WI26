@@ -1,0 +1,30 @@
+project:
+  name: Human-AI Behavior Observatory
+  slug: human-ai-behavior-observatory
+  phase: 1
+  primary_dataset: WildChat / public ChatGPT interaction datasets
+
+paths:
+  raw_data: data/raw
+  processed_data: data/processed
+  embeddings: data/embeddings
+  metadata: data/metadata
+  figures: figures
+  reports: reports
+  models: models
+
+preprocessing:
+  input_file: null
+  output_file: data/processed/master_dataset.parquet
+  schema_file: configs/metadata_schema.yml
+  text_column_candidates:
+    - prompt
+    - user_prompt
+    - text
+    - conversation
+  timestamp_column_candidates:
+    - timestamp
+    - created_at
+    - date
+  language: en
+
