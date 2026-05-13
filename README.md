@@ -1,17 +1,101 @@
-This is your group repo for your final project for COGS108.
+# Human-AI Behavior Observatory
 
-This repository is private, and is only visible to the course instructors and your group mates; it is not visible to anyone else.
+Human-AI Behavior Observatory is a redevelopment of the original COGS 108 group project into a long-term computational social science and NLP platform for studying public human interaction with conversational AI systems.
 
-Template notebooks for each component are provided. The numbers on the notebook filenames provides the order things are due.  See the syllabus for the due dates in your quarter.
+The original class materials are archived in `deprecate/`. This repository now treats that work as seed material rather than the final analytical frame.
 
-You will be graded based solely on the numbered Jupyter notebooks in this repository.  You will recieve your grade and feedback on how to improve via GitHub Issues on this repository. 
+## Research Direction
 
-We have created a suggested organization for your repo, including directory structures for storing `./data`, `./results`, and for creating `./modules` that your notebooks can import. 
+The project investigates how people use conversational AI over time, with emphasis on:
 
-Its worth noting that `./data` is for storing local copies of the data, but by default this repo is configured to **not** allow you to store common datafiles in GitHub.  This is because GitHub has low limits on maximum file and repo size.  So instead you would download your data direct from its original provider or from your personal cloud storage. There are scripts inside some of the notebooks to download data from any URL to `./data`.  If you wish to remove this limitation and store small data files directly in your GitHub you should edit your `.gitignore` file.
+- behavioral shifts from tool use to social interaction,
+- emotional and vulnerability signals,
+- cognitive outsourcing patterns,
+- prompt sophistication,
+- semantic drift,
+- user archetypes,
+- conversational depth,
+- behavioral network structure.
 
-But this is *your* repo. You are free to manage the repo as you see fit, edit this README, add data files anywhere you want, etc. So long as there are the four numbered Jupyter notebooks in place on the due dates with the required information, the rest is up to you. 
+## Phase 1 Status
 
-At the final project date there is an option to make your final project visible to others.  If you choose this option your repo will become publicly visible. 
+Phase 1 reconstructs the repository so later work can happen in a reproducible, modular way.
 
-Also, you are encouraged to share this project after the course and to add it to your portfolio. If your repo is public you may fork it. If it is private you may follow [these instructions](https://docs.google.com/document/d/1_PP-vlsyWjNegGGsmeDB5B-ltjYW1Db14q9dx3HM9e4/edit?usp=sharing)
+Current infrastructure includes:
+
+- research-oriented repository layout,
+- archived COGS 108 materials,
+- dependency files for `pip` and `conda`,
+- project configuration,
+- metadata schema draft,
+- preprocessing pipeline entrypoint,
+- module directories for future analysis systems.
+
+## Repository Layout
+
+```text
+data/
+  raw/
+  processed/
+  embeddings/
+  metadata/
+notebooks/
+  exploratory/
+  experiments/
+  archived_cogs108/
+src/
+  preprocessing/
+  embeddings/
+  clustering/
+  emotion_analysis/
+  temporal_analysis/
+  semantic_drift/
+  cognitive_outsourcing/
+  network_analysis/
+  visualization/
+  evaluation/
+  dashboard/
+configs/
+docs/
+dashboard/
+website/
+reports/
+papers/
+figures/
+experiments/
+models/
+tests/
+deprecate/
+```
+
+## Setup
+
+Using `pip`:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Using `conda`:
+
+```bash
+conda env create -f environment.yml
+conda activate human-ai-behavior-observatory
+```
+
+## Preprocessing
+
+The Phase 1 preprocessing command validates the project structure and prepares a clean handoff point for Phase 2 data engineering.
+
+```bash
+python -m src.preprocessing.run_preprocessing --config configs/project.yaml
+```
+
+Phase 2 will extend this command with dataset-specific cleaning, normalization, deduplication, language filtering, metadata extraction, and embedding generation.
+
+## Data Policy
+
+Large raw, processed, and embedding files should stay out of Git unless explicitly curated for a small reproducible sample. Use the `data/` folders for local development artifacts and document external sources in `data/metadata/`.
+

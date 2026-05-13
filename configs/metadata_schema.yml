@@ -1,0 +1,55 @@
+dataset:
+  description: Canonical schema draft for public human-AI interaction records.
+  grain: One row per user prompt or user-visible interaction turn.
+
+required_columns:
+  record_id:
+    type: string
+    description: Stable unique identifier for a prompt or interaction row.
+  conversation_id:
+    type: string
+    description: Stable identifier connecting turns from the same conversation when available.
+  turn_index:
+    type: integer
+    description: Zero-based or one-based turn order within a conversation.
+  prompt_text:
+    type: string
+    description: User-authored prompt or message text.
+  timestamp:
+    type: datetime
+    description: Normalized timestamp in UTC when available.
+  source_dataset:
+    type: string
+    description: Dataset provenance label.
+
+derived_metadata:
+  prompt_length:
+    type: integer
+    description: Character or token length of the user prompt.
+  language:
+    type: string
+    description: Detected language code.
+  emotion_scores:
+    type: object
+    description: Model-derived emotion probabilities.
+  interaction_type:
+    type: categorical
+    categories:
+      - tool_mode
+      - assistant_mode
+      - collaborator_mode
+      - companion_mode
+      - therapist_surrogate_mode
+  semantic_cluster:
+    type: string
+    description: Cluster or topic identifier from embedding-based analysis.
+  complexity_score:
+    type: float
+    description: Composite prompt sophistication metric.
+  disclosure_score:
+    type: float
+    description: Self-disclosure or vulnerability indicator.
+  dependency_score:
+    type: float
+    description: Cognitive or emotional dependency indicator.
+
