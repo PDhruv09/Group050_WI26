@@ -13,6 +13,14 @@ paths:
   reports: reports
   models: models
 
+data_acquisition:
+  wildchat:
+    dataset_name: allenai/WildChat
+    split: train
+    output_file: data/raw/wildchat_prompts_raw.jsonl
+    streaming: true
+    sample_size: null
+
 preprocessing:
   input_file: null
   output_file: data/processed/master_dataset.parquet
@@ -40,7 +48,26 @@ preprocessing:
     - turn
     - message_index
     - index
-  language: en
+  language_column_candidates:
+    - language
+    - lang
+  language_filter:
+    enabled: false
+    include:
+      - en
+      - English
   min_prompt_chars: 3
+  min_prompt_words: 2
+  remove_short_prompts: true
+  flag_long_prompts: true
+  long_prompt_quantile: 0.99
+  remove_long_prompts: false
   drop_duplicates: true
-  require_language_match: false
+
+splits:
+  enabled: true
+  strategy: hash_by_conversation
+  train: 0.7
+  validation: 0.15
+  test: 0.15
+  output_dir: data/processed

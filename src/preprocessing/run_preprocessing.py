@@ -92,7 +92,12 @@ def main() -> None:
     print(f"Schema: {schema_file}")
     print(f"Input rows: {summary['raw_rows']}")
     print(f"Processed rows: {summary['processed_rows']}")
+    print(f"Split counts: {summary['split_counts']}")
     print(f"Output: {output_file}")
+    if summary["split_outputs"]:
+        print(f"Train split: {summary['split_outputs']['train']}")
+        print(f"Validation split: {summary['split_outputs']['validation']}")
+        print(f"Test split: {summary['split_outputs']['test']}")
     print(f"Registry: {registry_file}")
 
 

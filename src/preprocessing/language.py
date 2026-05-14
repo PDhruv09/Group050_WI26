@@ -48,3 +48,18 @@ def detect_language(text: str) -> str:
         return "en"
     return "unknown"
 
+
+def normalize_language_label(value: object) -> str:
+    """Normalize common dataset language labels for filtering."""
+    if value is None:
+        return "unknown"
+
+    label = str(value).strip()
+    if not label:
+        return "unknown"
+
+    lowered = label.lower()
+    if lowered in {"en", "eng", "english"}:
+        return "en"
+
+    return lowered

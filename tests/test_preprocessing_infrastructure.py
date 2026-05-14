@@ -52,7 +52,7 @@ def test_run_pipeline_writes_processed_dataset_and_registry_ready_summary() -> N
         "prompt,created_at,conversation_id,turn\n"
         "How do I study for an exam?,2024-02-01T00:00:00Z,c1,1\n"
         "How do I study for an exam?,2024-02-01T00:00:00Z,c1,1\n"
-        "okay,2024-02-01T00:01:00Z,c1,2\n",
+        "okay thanks,2024-02-01T00:01:00Z,c1,2\n",
         encoding="utf-8",
     )
 
@@ -62,5 +62,7 @@ def test_run_pipeline_writes_processed_dataset_and_registry_ready_summary() -> N
     assert summary["raw_rows"] == 3
     assert summary["processed_rows"] == 2
     assert "prompt_text" in summary["columns"]
+    assert summary["split_outputs"]
+    assert set(summary["split_counts"]).issubset({"train", "validation", "test"})
 
     json.dumps(summary)

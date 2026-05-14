@@ -18,6 +18,18 @@ required_columns:
   timestamp:
     type: datetime
     description: Normalized timestamp in UTC when available.
+  date:
+    type: date
+    description: Calendar date derived from timestamp when available.
+  year:
+    type: integer
+    description: Calendar year derived from timestamp when available.
+  month:
+    type: integer
+    description: Calendar month derived from timestamp when available.
+  year_month:
+    type: string
+    description: Year-month period derived from timestamp for temporal analysis.
   source_dataset:
     type: string
     description: Dataset provenance label.
@@ -34,7 +46,26 @@ derived_metadata:
     description: Whitespace-delimited word count of the user prompt.
   language:
     type: string
-    description: Lightweight detected language code.
+    description: Normalized language code or label used for filtering.
+  language_original:
+    type: string
+    description: Source dataset language label when available.
+  language_detected:
+    type: string
+    description: Lightweight detected language code from prompt text.
+  data_split:
+    type: categorical
+    categories:
+      - train
+      - validation
+      - test
+    description: Deterministic analysis/modeling split.
+  is_short_prompt:
+    type: boolean
+    description: Whether the prompt is shorter than configured quality threshold.
+  is_length_outlier:
+    type: boolean
+    description: Whether the prompt is above the configured length outlier threshold.
   has_question:
     type: boolean
     description: Whether the prompt contains a question mark or common question starter.

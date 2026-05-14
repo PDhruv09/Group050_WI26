@@ -28,12 +28,17 @@ Current infrastructure includes:
 - dependency files for `pip` and `conda`,
 - project configuration,
 - metadata schema draft,
+- full WildChat acquisition from Hugging Face,
 - local CSV/JSON/JSONL/Parquet ingestion,
 - prompt text normalization,
 - timestamp normalization,
+- temporal metadata fields,
 - deterministic record IDs and text hashes,
 - duplicate removal,
 - lightweight language tagging,
+- configurable language filtering,
+- quality flags for short and long prompts,
+- deterministic train/validation/test splits,
 - metadata extraction,
 - preprocessing registry output,
 - module directories for future analysis systems.
@@ -94,6 +99,26 @@ conda activate human-ai-behavior-observatory
 
 ## Preprocessing
 
+Run complete Phase 2 on full WildChat:
+
+```bash
+python -m src.preprocessing.run_phase2_wildchat
+```
+
+This acquires the full Hugging Face `allenai/WildChat` `train` split, extracts prompt-level user messages into `data/raw/`, preprocesses them, and writes master/train/validation/test outputs.
+
+For a quick development sample:
+
+```bash
+python -m src.data_acquisition.wildchat --sample-size 10000 --output data/raw/wildchat_prompts_raw.jsonl
+```
+
+Or run acquisition and preprocessing together on a sample:
+
+```bash
+python -m src.preprocessing.run_phase2_wildchat --sample-size 10000
+```
+
 Validate the project structure without processing records:
 
 ```bash
@@ -103,12 +128,14 @@ python -m src.preprocessing.run_preprocessing --config configs/project.yaml --va
 Run the Phase 2 preprocessing pipeline on a local dataset:
 
 ```bash
-python -m src.preprocessing.run_preprocessing --config configs/project.yaml --input data/raw/example.csv --output data/processed/master_dataset.parquet --source-dataset example
+python -m src.preprocessing.run_preprocessing --config configs/project.yaml --input data/raw/wildchat_prompts_raw.jsonl --output data/processed/master_dataset.parquet --source-dataset wildchat
 ```
 
 Supported input formats are `.csv`, `.json`, `.jsonl`, `.ndjson`, and `.parquet`.
 
 The processed output includes canonical identifiers, normalized text, timestamp fields, prompt length, word count, language tag, question/code indicators, and placeholder score columns for later model-driven annotations.
+
+Phase 2 preserves all timestamps and all languages by default. Language filtering is configured as a toggle in `configs/project.yaml`, which keeps the dataset dashboard-ready for later filtering.
 
 ## Data Policy
 
