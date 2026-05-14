@@ -17,9 +17,9 @@ The project investigates how people use conversational AI over time, with emphas
 - conversational depth,
 - behavioral network structure.
 
-## Phase 1 Status
+## Phase 2 Status
 
-Phase 1 reconstructs the repository so later work can happen in a reproducible, modular way.
+Phase 2 adds the first reusable data-engineering pipeline so later analysis modules can rely on a canonical prompt-level dataset.
 
 Current infrastructure includes:
 
@@ -28,7 +28,14 @@ Current infrastructure includes:
 - dependency files for `pip` and `conda`,
 - project configuration,
 - metadata schema draft,
-- preprocessing pipeline entrypoint,
+- local CSV/JSON/JSONL/Parquet ingestion,
+- prompt text normalization,
+- timestamp normalization,
+- deterministic record IDs and text hashes,
+- duplicate removal,
+- lightweight language tagging,
+- metadata extraction,
+- preprocessing registry output,
 - module directories for future analysis systems.
 
 ## Repository Layout
@@ -87,15 +94,22 @@ conda activate human-ai-behavior-observatory
 
 ## Preprocessing
 
-The Phase 1 preprocessing command validates the project structure and prepares a clean handoff point for Phase 2 data engineering.
+Validate the project structure without processing records:
 
 ```bash
-python -m src.preprocessing.run_preprocessing --config configs/project.yaml
+python -m src.preprocessing.run_preprocessing --config configs/project.yaml --validate-only
 ```
 
-Phase 2 will extend this command with dataset-specific cleaning, normalization, deduplication, language filtering, metadata extraction, and embedding generation.
+Run the Phase 2 preprocessing pipeline on a local dataset:
+
+```bash
+python -m src.preprocessing.run_preprocessing --config configs/project.yaml --input data/raw/example.csv --output data/processed/master_dataset.parquet --source-dataset example
+```
+
+Supported input formats are `.csv`, `.json`, `.jsonl`, `.ndjson`, and `.parquet`.
+
+The processed output includes canonical identifiers, normalized text, timestamp fields, prompt length, word count, language tag, question/code indicators, and placeholder score columns for later model-driven annotations.
 
 ## Data Policy
 
 Large raw, processed, and embedding files should stay out of Git unless explicitly curated for a small reproducible sample. Use the `data/` folders for local development artifacts and document external sources in `data/metadata/`.
-

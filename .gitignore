@@ -50,6 +50,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 pytest-cache-files-*/
+tests/_tmp/
 cover/
 
 # Translations
@@ -189,6 +190,7 @@ data/*.sq*
 data/*/*.sq*
 data/*.SQ*
 data/*/*.SQ*
+data/metadata/preprocessing_registry.json
 
 data/00-raw/*
 data/01-interim/*
