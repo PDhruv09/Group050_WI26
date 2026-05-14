@@ -31,6 +31,8 @@ Run complete Phase 2 on the full WildChat dataset:
 python -m src.preprocessing.run_phase2_wildchat
 ```
 
+The default acquisition mode matches the original notebook and loads the Hugging Face split eagerly rather than using streaming.
+
 Run the complete workflow on a development sample:
 
 ```bash

@@ -19,9 +19,14 @@ def main() -> None:
     parser.add_argument("--sample-size", type=int, default=None)
     parser.add_argument("--max-conversations", type=int, default=None)
     parser.add_argument(
+        "--streaming",
+        action="store_true",
+        help="Stream records from Hugging Face instead of downloading the split eagerly.",
+    )
+    parser.add_argument(
         "--no-streaming",
         action="store_true",
-        help="Download the Hugging Face split eagerly instead of streaming it.",
+        help="Deprecated compatibility flag. Non-streaming is now the default.",
     )
     args = parser.parse_args()
 
@@ -41,7 +46,7 @@ def main() -> None:
         output_file=raw_output,
         dataset_name=acquisition_config["dataset_name"],
         split=acquisition_config["split"],
-        streaming=not args.no_streaming and bool(acquisition_config.get("streaming", True)),
+        streaming=args.streaming and not args.no_streaming and bool(acquisition_config.get("streaming", False)),
         max_conversations=args.max_conversations,
         sample_size=sample_size,
     )

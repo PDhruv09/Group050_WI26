@@ -136,7 +136,7 @@ def acquire_wildchat(
     output_file: Path,
     dataset_name: str = DEFAULT_DATASET_NAME,
     split: str = DEFAULT_SPLIT,
-    streaming: bool = True,
+    streaming: bool = False,
     max_conversations: int | None = None,
     sample_size: int | None = None,
 ) -> dict[str, Any]:
@@ -177,9 +177,14 @@ def main() -> None:
         help="Maximum prompt rows to save. Use 0 for no prompt limit.",
     )
     parser.add_argument(
+        "--streaming",
+        action="store_true",
+        help="Stream records from Hugging Face instead of downloading the split eagerly.",
+    )
+    parser.add_argument(
         "--no-streaming",
         action="store_true",
-        help="Download the Hugging Face split eagerly instead of streaming it.",
+        help="Deprecated compatibility flag. Non-streaming is now the default.",
     )
     args = parser.parse_args()
 
@@ -187,7 +192,7 @@ def main() -> None:
         output_file=Path(args.output),
         dataset_name=args.dataset_name,
         split=args.split,
-        streaming=not args.no_streaming,
+        streaming=args.streaming and not args.no_streaming,
         max_conversations=args.max_conversations,
         sample_size=args.sample_size,
     )

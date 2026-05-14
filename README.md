@@ -106,6 +106,7 @@ python -m src.preprocessing.run_phase2_wildchat
 ```
 
 This acquires the full Hugging Face `allenai/WildChat` `train` split, extracts prompt-level user messages into `data/raw/`, preprocesses them, and writes master/train/validation/test outputs.
+The default acquisition mode matches the original notebook: `load_dataset("allenai/WildChat", split="train")`.
 
 For a quick development sample:
 
