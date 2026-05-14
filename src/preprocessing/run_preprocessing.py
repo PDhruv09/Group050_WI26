@@ -1,8 +1,4 @@
-"""Phase 1 preprocessing entrypoint.
-
-This script intentionally performs structural validation only. Dataset-specific
-normalization and feature extraction will be implemented in Phase 2.
-"""
+"""Preprocessing entrypoint for local human-AI interaction datasets."""
 
 from __future__ import annotations
 
@@ -10,6 +6,9 @@ import argparse
 from pathlib import Path
 
 import yaml
+
+from src.preprocessing.pipeline import run_pipeline
+from src.preprocessing.registry import write_registry
 
 
 def load_config(config_path: Path) -> dict:
@@ -29,11 +28,33 @@ def validate_paths(config: dict, project_root: Path) -> list[Path]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Validate Phase 1 preprocessing infrastructure.")
+    parser = argparse.ArgumentParser(description="Run the Phase 2 preprocessing pipeline.")
     parser.add_argument(
         "--config",
         default="configs/project.yaml",
         help="Path to the project configuration file.",
+    )
+    parser.add_argument(
+        "--input",
+        dest="input_file",
+        default=None,
+        help="Input dataset path. Overrides preprocessing.input_file in the config.",
+    )
+    parser.add_argument(
+        "--output",
+        dest="output_file",
+        default=None,
+        help="Output dataset path. Overrides preprocessing.output_file in the config.",
+    )
+    parser.add_argument(
+        "--source-dataset",
+        default=None,
+        help="Source dataset label to store in the processed output.",
+    )
+    parser.add_argument(
+        "--validate-only",
+        action="store_true",
+        help="Only validate config, schema, and directories without processing data.",
     )
     args = parser.parse_args()
 
@@ -46,12 +67,39 @@ def main() -> None:
     if not schema_file.exists():
         raise FileNotFoundError(f"Metadata schema not found: {schema_file}")
 
-    print("Phase 1 preprocessing infrastructure is ready.")
+    input_setting = args.input_file or config["preprocessing"].get("input_file")
+    output_setting = args.output_file or config["preprocessing"]["output_file"]
+
+    if args.validate_only or not input_setting:
+        print("Preprocessing infrastructure is ready.")
+        print("No input dataset was provided, so no records were processed.")
+        print(f"Config: {config_path}")
+        print(f"Schema: {schema_file}")
+        print(f"Validated paths: {len(paths)}")
+        return
+
+    input_file = project_root / input_setting
+    output_file = project_root / output_setting
+    if not input_file.exists():
+        raise FileNotFoundError(f"Input dataset not found: {input_file}")
+
+    summary = run_pipeline(input_file, output_file, config, args.source_dataset)
+    registry_file = project_root / config["preprocessing"]["registry_file"]
+    write_registry(summary, registry_file)
+
+    print("Preprocessing complete.")
     print(f"Config: {config_path}")
     print(f"Schema: {schema_file}")
-    print(f"Validated paths: {len(paths)}")
+    print(f"Input rows: {summary['raw_rows']}")
+    print(f"Processed rows: {summary['processed_rows']}")
+    print(f"Split counts: {summary['split_counts']}")
+    print(f"Output: {output_file}")
+    if summary["split_outputs"]:
+        print(f"Train split: {summary['split_outputs']['train']}")
+        print(f"Validation split: {summary['split_outputs']['validation']}")
+        print(f"Test split: {summary['split_outputs']['test']}")
+    print(f"Registry: {registry_file}")
 
 
 if __name__ == "__main__":
     main()
-

@@ -1,7 +1,7 @@
 project:
   name: Human-AI Behavior Observatory
   slug: human-ai-behavior-observatory
-  phase: 1
+  phase: 2
   primary_dataset: WildChat / public ChatGPT interaction datasets
 
 paths:
@@ -13,18 +13,61 @@ paths:
   reports: reports
   models: models
 
+data_acquisition:
+  wildchat:
+    dataset_name: allenai/WildChat
+    split: train
+    output_file: data/raw/wildchat_prompts_raw.jsonl
+    streaming: false
+    sample_size: null
+
 preprocessing:
   input_file: null
   output_file: data/processed/master_dataset.parquet
+  registry_file: data/metadata/preprocessing_registry.json
   schema_file: configs/metadata_schema.yml
   text_column_candidates:
     - prompt
     - user_prompt
     - text
     - conversation
+    - instruction
+    - message
   timestamp_column_candidates:
     - timestamp
     - created_at
     - date
-  language: en
+    - time
+  conversation_id_column_candidates:
+    - conversation_id
+    - conv_id
+    - session_id
+    - chat_id
+  turn_index_column_candidates:
+    - turn_index
+    - turn
+    - message_index
+    - index
+  language_column_candidates:
+    - language
+    - lang
+  language_filter:
+    enabled: false
+    include:
+      - en
+      - English
+  min_prompt_chars: 3
+  min_prompt_words: 2
+  remove_short_prompts: true
+  flag_long_prompts: true
+  long_prompt_quantile: 0.99
+  remove_long_prompts: false
+  drop_duplicates: true
 
+splits:
+  enabled: true
+  strategy: hash_by_conversation
+  train: 0.7
+  validation: 0.15
+  test: 0.15
+  output_dir: data/processed

@@ -18,3 +18,4 @@ Rebuild the repository from a course submission into a modular research platform
 
 Phase 1 does not implement dataset-specific cleaning, embedding generation, BERTopic modeling, classifiers, dashboards, or analysis results. Those belong to later phases.
 
+Phase 2 has now started the dataset cleaning and canonicalization layer. See `docs/phase_2_data_engineering.md`.

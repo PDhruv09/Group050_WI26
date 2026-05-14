@@ -18,17 +18,63 @@ required_columns:
   timestamp:
     type: datetime
     description: Normalized timestamp in UTC when available.
+  date:
+    type: date
+    description: Calendar date derived from timestamp when available.
+  year:
+    type: integer
+    description: Calendar year derived from timestamp when available.
+  month:
+    type: integer
+    description: Calendar month derived from timestamp when available.
+  year_month:
+    type: string
+    description: Year-month period derived from timestamp for temporal analysis.
   source_dataset:
     type: string
     description: Dataset provenance label.
+  raw_text_hash:
+    type: string
+    description: SHA-256 hash of the normalized prompt text used for deduplication.
 
 derived_metadata:
   prompt_length:
     type: integer
-    description: Character or token length of the user prompt.
+    description: Character length of the user prompt.
+  prompt_word_count:
+    type: integer
+    description: Whitespace-delimited word count of the user prompt.
   language:
     type: string
-    description: Detected language code.
+    description: Normalized language code or label used for filtering.
+  language_original:
+    type: string
+    description: Source dataset language label when available.
+  language_detected:
+    type: string
+    description: Lightweight detected language code from prompt text.
+  data_split:
+    type: categorical
+    categories:
+      - train
+      - validation
+      - test
+    description: Deterministic analysis/modeling split.
+  is_short_prompt:
+    type: boolean
+    description: Whether the prompt is shorter than configured quality threshold.
+  is_length_outlier:
+    type: boolean
+    description: Whether the prompt is above the configured length outlier threshold.
+  has_question:
+    type: boolean
+    description: Whether the prompt contains a question mark or common question starter.
+  contains_code:
+    type: boolean
+    description: Whether the prompt appears to contain code syntax or code block markers.
+  cleaned_at:
+    type: datetime
+    description: UTC timestamp when the preprocessing pipeline generated the record.
   emotion_scores:
     type: object
     description: Model-derived emotion probabilities.
@@ -52,4 +98,3 @@ derived_metadata:
   dependency_score:
     type: float
     description: Cognitive or emotional dependency indicator.
-
