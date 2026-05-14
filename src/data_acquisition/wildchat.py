@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from datetime import date, datetime
 from collections.abc import Iterable, Iterator
 from pathlib import Path
 from typing import Any
@@ -17,6 +18,19 @@ from src.preprocessing.metadata import normalize_whitespace
 DEFAULT_DATASET_NAME = "allenai/WildChat"
 DEFAULT_SPLIT = "train"
 DEFAULT_OUTPUT = "data/raw/wildchat_prompts_raw.jsonl"
+
+
+def make_json_safe(value: Any) -> Any:
+    """Convert common dataset scalar values into JSON-serializable values."""
+    if isinstance(value, (datetime, date)):
+        return value.isoformat()
+    if hasattr(value, "item"):
+        return value.item()
+    if isinstance(value, dict):
+        return {str(key): make_json_safe(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [make_json_safe(item) for item in value]
+    return value
 
 
 def load_huggingface_dataset(dataset_name: str, split: str, streaming: bool) -> Iterable[dict[str, Any]]:
@@ -122,7 +136,7 @@ def write_prompt_rows(rows: Iterable[dict[str, Any]], output_file: Path) -> int:
         count = 0
         with output_file.open("w", encoding="utf-8") as file:
             for row in rows:
-                file.write(json.dumps(row, ensure_ascii=True))
+                file.write(json.dumps(make_json_safe(row), ensure_ascii=True))
                 file.write("\n")
                 count += 1
         return count

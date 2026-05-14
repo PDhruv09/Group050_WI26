@@ -1,6 +1,7 @@
 from pathlib import Path
+from datetime import datetime, timezone
 
-from src.data_acquisition.wildchat import extract_user_prompt_rows, iter_prompt_rows, write_prompt_rows
+from src.data_acquisition.wildchat import extract_user_prompt_rows, iter_prompt_rows, make_json_safe, write_prompt_rows
 
 
 def test_extract_user_prompt_rows_from_conversation_record() -> None:
@@ -52,3 +53,11 @@ def test_write_prompt_rows_streams_jsonl() -> None:
 
     assert count == 3
     assert output_file.read_text(encoding="utf-8").count("\n") == 3
+
+
+def test_make_json_safe_converts_datetime() -> None:
+    value = {"timestamp": datetime(2024, 1, 1, tzinfo=timezone.utc)}
+
+    safe = make_json_safe(value)
+
+    assert safe == {"timestamp": "2024-01-01T00:00:00+00:00"}
