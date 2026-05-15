@@ -1,7 +1,7 @@
 project:
   name: Human-AI Behavior Observatory
   slug: human-ai-behavior-observatory
-  phase: 2
+  phase: 3
   primary_dataset: WildChat / public ChatGPT interaction datasets
 
 paths:
@@ -71,3 +71,30 @@ splits:
   validation: 0.15
   test: 0.15
   output_dir: data/processed
+
+embeddings:
+  input_file: data/processed/master_dataset.parquet
+  text_column: prompt_text
+  id_column: record_id
+  split_column: data_split
+  model_name: sentence-transformers/all-MiniLM-L6-v2
+  batch_size: 64
+  normalize_embeddings: true
+  output_file: data/embeddings/prompt_embeddings.npy
+  metadata_file: data/embeddings/prompt_embedding_metadata.parquet
+  manifest_file: data/embeddings/embedding_manifest.json
+
+semantic_search:
+  top_k: 10
+
+topic_modeling:
+  input_file: data/processed/master_dataset.parquet
+  embeddings_file: data/embeddings/prompt_embeddings.npy
+  output_dir: data/processed/topics
+  text_column: prompt_text
+  min_topic_size: 50
+
+semantic_drift:
+  time_column: year_month
+  embedding_group_column: year_month
+  output_file: data/embeddings/semantic_drift_centroids.parquet

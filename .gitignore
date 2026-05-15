@@ -194,6 +194,10 @@ data/*.parquet
 data/*/*.parquet
 data/*.jsonl
 data/*/*.jsonl
+data/*.npy
+data/*/*.npy
+data/embeddings/*.json
+data/processed/topics/*
 data/metadata/preprocessing_registry.json
 
 data/raw/*
