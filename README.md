@@ -45,6 +45,10 @@ Current infrastructure includes:
 - semantic search utilities,
 - semantic drift centroid generation,
 - BERTopic baseline runner,
+- embedding benchmarking and reproducibility checks,
+- standalone UMAP/HDBSCAN clustering,
+- topic validation and summaries,
+- semantic visualizations,
 - module directories for future analysis systems.
 
 ## Repository Layout
@@ -166,6 +170,30 @@ Run the BERTopic baseline:
 
 ```bash
 python -m src.clustering.bertopic_baseline --config configs/project.yaml
+```
+
+Run semantic clustering:
+
+```bash
+python -m src.clustering.semantic_clustering --config configs/project.yaml
+```
+
+Evaluate topics and generate summaries:
+
+```bash
+python -m src.clustering.topic_evaluation --config configs/project.yaml
+```
+
+Benchmark embedding models:
+
+```bash
+python -m src.embeddings.benchmark --config configs/project.yaml
+```
+
+Generate semantic visualizations:
+
+```bash
+python -m src.visualization.semantic_plots --config configs/project.yaml --kind all
 ```
 
 ## Data Policy

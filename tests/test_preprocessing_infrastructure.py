@@ -61,6 +61,7 @@ def test_run_pipeline_writes_processed_dataset_and_registry_ready_summary() -> N
     summary = run_pipeline(input_file, output_file, config, "unit_test")
 
     assert output_file.exists()
+    assert (test_dir / "splits" / "train.parquet").exists()
     assert summary["raw_rows"] == 3
     assert summary["processed_rows"] == 2
     assert "prompt_text" in summary["columns"]

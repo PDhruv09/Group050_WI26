@@ -49,3 +49,55 @@ def write_centroids(
     centroids.to_parquet(output_file, index=False)
     return centroids
 
+
+def cosine_distance(left: list[float], right: list[float]) -> float:
+    """Compute cosine distance between two centroid vectors."""
+    left_array = np.array(left, dtype=float)
+    right_array = np.array(right, dtype=float)
+    denominator = np.linalg.norm(left_array) * np.linalg.norm(right_array)
+    if denominator == 0:
+        return 0.0
+    return float(1 - ((left_array @ right_array) / denominator))
+
+
+def compute_temporal_drift_metrics(centroids: pd.DataFrame, group_column: str) -> pd.DataFrame:
+    """Measure consecutive-period centroid movement."""
+    ordered = centroids.sort_values(group_column).reset_index(drop=True)
+    rows = []
+    for index in range(1, len(ordered)):
+        previous = ordered.iloc[index - 1]
+        current = ordered.iloc[index]
+        rows.append(
+            {
+                "from_period": previous[group_column],
+                "to_period": current[group_column],
+                "from_records": int(previous["num_records"]),
+                "to_records": int(current["num_records"]),
+                "cosine_distance": cosine_distance(previous["centroid"], current["centroid"]),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def compute_rolling_centroids(
+    embeddings: np.ndarray,
+    metadata: pd.DataFrame,
+    group_column: str,
+    window: int,
+) -> pd.DataFrame:
+    """Compute rolling-window centroids across ordered temporal groups."""
+    groups = sorted(metadata[group_column].dropna().unique())
+    rows = []
+    for end_index in range(window - 1, len(groups)):
+        window_groups = groups[end_index - window + 1 : end_index + 1]
+        mask = metadata[group_column].isin(window_groups).to_numpy()
+        centroid = embeddings[mask].mean(axis=0)
+        rows.append(
+            {
+                "window_start": window_groups[0],
+                "window_end": window_groups[-1],
+                "num_records": int(mask.sum()),
+                "centroid": centroid.tolist(),
+            }
+        )
+    return pd.DataFrame(rows)

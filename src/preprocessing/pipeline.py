@@ -141,7 +141,11 @@ def run_pipeline(input_file: Path, output_file: Path, config: dict, source_datas
     write_dataset(processed, output_file)
     split_outputs = {}
     if config.get("splits", {}).get("enabled", True):
-        split_output_dir = Path(config["splits"].get("output_dir", output_file.parent))
+        configured_output = Path(config["preprocessing"]["output_file"])
+        if output_file == configured_output:
+            split_output_dir = Path(config["splits"].get("output_dir", output_file.parent))
+        else:
+            split_output_dir = output_file.parent / "splits"
         split_outputs = write_split_outputs(processed, split_output_dir)
 
     return {

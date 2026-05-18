@@ -83,6 +83,13 @@ embeddings:
   output_file: data/embeddings/prompt_embeddings.npy
   metadata_file: data/embeddings/prompt_embedding_metadata.parquet
   manifest_file: data/embeddings/embedding_manifest.json
+  benchmark_file: reports/embedding_benchmark.csv
+  reproducibility_file: reports/embedding_reproducibility.json
+  comparison_file: reports/embedding_model_comparison.csv
+  comparison_models:
+    - sentence-transformers/all-MiniLM-L6-v2
+    - sentence-transformers/all-mpnet-base-v2
+  benchmark_sample_size: 10000
 
 semantic_search:
   top_k: 10
@@ -93,8 +100,38 @@ topic_modeling:
   output_dir: data/processed/topics
   text_column: prompt_text
   min_topic_size: 50
+  topic_summary_file: reports/topic_summaries.md
+  topic_validation_file: reports/topic_validation.json
+  coherence_top_n: 10
+
+clustering:
+  embeddings_file: data/embeddings/prompt_embeddings.npy
+  metadata_file: data/embeddings/prompt_embedding_metadata.parquet
+  output_dir: data/processed/clusters
+  sample_size: 100000
+  umap:
+    n_neighbors: 15
+    n_components: 2
+    min_dist: 0.0
+    metric: cosine
+  hdbscan:
+    min_cluster_size: 50
+    min_samples: 10
+    metric: euclidean
+  methods:
+    kmeans_clusters:
+      - 20
+      - 50
 
 semantic_drift:
   time_column: year_month
   embedding_group_column: year_month
   output_file: data/embeddings/semantic_drift_centroids.parquet
+  metrics_file: reports/semantic_drift_metrics.csv
+  rolling_window: 3
+
+visualization:
+  output_dir: figures
+  cluster_map_file: figures/semantic_cluster_map.html
+  topic_evolution_file: figures/topic_evolution.html
+  drift_file: figures/semantic_drift.html
