@@ -42,6 +42,11 @@ def simple_topic_diversity(topics_terms: pd.DataFrame) -> float:
     return len(set(terms)) / len(terms) if terms else 0.0
 
 
+def count_non_outlier_topics(topics: pd.Series) -> int:
+    """Count unique BERTopic topics excluding the outlier topic -1."""
+    return int(topics[topics != -1].nunique())
+
+
 def evaluate_topics(config: dict) -> dict:
     """Evaluate BERTopic outputs with lightweight, reproducible metrics."""
     topic_config = config["topic_modeling"]
@@ -58,7 +63,7 @@ def evaluate_topics(config: dict) -> dict:
     diversity = simple_topic_diversity(terms)
     payload = {
         "num_documents": int(len(assignments)),
-        "num_topics": int((topics != -1).nunique()),
+        "num_topics": count_non_outlier_topics(topics),
         "noise_fraction": float((topics == -1).mean()),
         "topic_diversity": diversity,
     }

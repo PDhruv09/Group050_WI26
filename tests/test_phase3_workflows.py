@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 from src.clustering.semantic_clustering import deterministic_sample_indices, evaluate_labels, label_clusters
-from src.clustering.topic_evaluation import simple_topic_diversity, top_terms_by_topic
+from src.clustering.topic_evaluation import count_non_outlier_topics, simple_topic_diversity, top_terms_by_topic
 from src.embeddings.benchmark import sample_texts
 from src.semantic_drift.centroids import compute_rolling_centroids, compute_temporal_drift_metrics, cosine_distance
 
@@ -52,6 +52,7 @@ def test_topic_terms_and_diversity() -> None:
 
     assert set(terms["topic"]) == {0, 1}
     assert 0 < simple_topic_diversity(terms) <= 1
+    assert count_non_outlier_topics(pd.Series([-1, 0, 0, 1, 2])) == 3
 
 
 def test_temporal_drift_metrics_and_rolling_centroids() -> None:
