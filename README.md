@@ -17,9 +17,9 @@ The project investigates how people use conversational AI over time, with emphas
 - conversational depth,
 - behavioral network structure.
 
-## Phase 2 Status
+## Phase 3 Status
 
-Phase 2 adds the first reusable data-engineering pipeline so later analysis modules can rely on a canonical prompt-level dataset.
+Phase 3 adds embedding and semantic infrastructure on top of the Phase 2 canonical prompt-level dataset.
 
 Current infrastructure includes:
 
@@ -41,6 +41,14 @@ Current infrastructure includes:
 - deterministic train/validation/test splits,
 - metadata extraction,
 - preprocessing registry output,
+- SentenceTransformer embedding generation,
+- semantic search utilities,
+- semantic drift centroid generation,
+- BERTopic baseline runner,
+- embedding benchmarking and reproducibility checks,
+- standalone UMAP/HDBSCAN clustering,
+- topic validation and summaries,
+- semantic visualizations,
 - module directories for future analysis systems.
 
 ## Repository Layout
@@ -137,6 +145,56 @@ Supported input formats are `.csv`, `.json`, `.jsonl`, `.ndjson`, and `.parquet`
 The processed output includes canonical identifiers, normalized text, timestamp fields, prompt length, word count, language tag, question/code indicators, and placeholder score columns for later model-driven annotations.
 
 Phase 2 preserves all timestamps and all languages by default. Language filtering is configured as a toggle in `configs/project.yaml`, which keeps the dataset dashboard-ready for later filtering.
+
+## Embeddings and Semantics
+
+Generate prompt embeddings:
+
+```bash
+python -m src.embeddings.generate_embeddings --config configs/project.yaml
+```
+
+Search embeddings:
+
+```bash
+python -m src.embeddings.semantic_search "emotional support and loneliness" --config configs/project.yaml --top-k 10
+```
+
+Compute semantic drift centroids:
+
+```bash
+python -m src.semantic_drift.run_semantic_drift --config configs/project.yaml
+```
+
+Run the BERTopic baseline:
+
+```bash
+python -m src.clustering.bertopic_baseline --config configs/project.yaml
+```
+
+Run semantic clustering:
+
+```bash
+python -m src.clustering.semantic_clustering --config configs/project.yaml
+```
+
+Evaluate topics and generate summaries:
+
+```bash
+python -m src.clustering.topic_evaluation --config configs/project.yaml
+```
+
+Benchmark embedding models:
+
+```bash
+python -m src.embeddings.benchmark --config configs/project.yaml
+```
+
+Generate semantic visualizations:
+
+```bash
+python -m src.visualization.semantic_plots --config configs/project.yaml --kind all
+```
 
 ## Data Policy
 
