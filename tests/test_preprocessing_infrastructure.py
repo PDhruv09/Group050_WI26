@@ -11,7 +11,7 @@ def test_project_config_loads() -> None:
     config = load_config(Path("configs/project.yaml"))
 
     assert config["project"]["slug"] == "human-ai-behavior-observatory"
-    assert config["project"]["phase"] == 3
+    assert config["project"]["phase"] == 4
     assert "schema_file" in config["preprocessing"]
     assert "model_name" in config["embeddings"]
 

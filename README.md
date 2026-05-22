@@ -17,9 +17,9 @@ The project investigates how people use conversational AI over time, with emphas
 - conversational depth,
 - behavioral network structure.
 
-## Phase 3 Status
+## Phase 4 Status
 
-Phase 3 adds embedding and semantic infrastructure on top of the Phase 2 canonical prompt-level dataset.
+Phase 4 adds behavioral classification infrastructure on top of the Phase 2 canonical prompt-level dataset and Phase 3 semantic outputs.
 
 Current infrastructure includes:
 
@@ -49,6 +49,12 @@ Current infrastructure includes:
 - standalone UMAP/HDBSCAN clustering,
 - topic validation and summaries,
 - semantic visualizations,
+- rule-based behavioral taxonomy,
+- interaction mode classification,
+- cognitive outsourcing classification,
+- emotional signal classification,
+- companionship, vulnerability, and dependency scores,
+- classification summaries and evaluation scaffolding,
 - module directories for future analysis systems.
 
 ## Repository Layout
@@ -67,6 +73,7 @@ src/
   preprocessing/
   embeddings/
   clustering/
+  classification/
   emotion_analysis/
   temporal_analysis/
   semantic_drift/
@@ -195,6 +202,22 @@ Generate semantic visualizations:
 ```bash
 python -m src.visualization.semantic_plots --config configs/project.yaml --kind all
 ```
+
+## Behavioral Classification
+
+Run the Phase 4 behavioral classifier:
+
+```bash
+python -m src.classification.run_classification --config configs/project.yaml
+```
+
+Run a smaller development sample:
+
+```bash
+python -m src.classification.run_classification --config configs/project.yaml --max-records 10000
+```
+
+The classifier writes a behavioral dataset, classification summary, manifest, and evaluation diagnostics using the taxonomy in `configs/behavior_taxonomy.yml`.
 
 ## Data Policy
 
