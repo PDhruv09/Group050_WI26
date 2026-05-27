@@ -1,0 +1,273 @@
+interaction_modes:
+  tool_mode:
+    description: User treats AI as software or a utility for task execution.
+    keywords:
+      - code
+      - debug
+      - summarize
+      - calculate
+      - spreadsheet
+      - regex
+      - function
+      - script
+      - SQL
+      - translate
+      - format
+      - grammar
+      - fix this
+      - error
+      - compile
+  assistant_mode:
+    description: User asks for guidance, explanation, tutoring, or practical help.
+    keywords:
+      - explain
+      - teach
+      - help me understand
+      - how do I
+      - step by step
+      - tutor
+      - study
+      - guide
+      - advice
+      - what should I
+      - compare
+      - learn
+  collaborator_mode:
+    description: User treats AI as a co-creator, brainstorming partner, or writing collaborator.
+    keywords:
+      - brainstorm
+      - co-write
+      - draft
+      - outline
+      - idea
+      - improve this
+      - make this better
+      - creative
+      - story
+      - proposal
+      - plan with me
+      - collaborate
+  companion_mode:
+    description: User treats AI as a social presence, listener, or source of reassurance.
+    keywords:
+      - lonely
+      - talk to me
+      - be my friend
+      - comfort me
+      - reassure me
+      - I miss
+      - I feel alone
+      - keep me company
+      - I need someone
+      - do you care
+      - relationship
+      - dating
+  therapist_surrogate_mode:
+    description: User seeks emotionally vulnerable or therapy-like support from AI.
+    keywords:
+      - anxiety
+      - depressed
+      - depression
+      - trauma
+      - panic attack
+      - suicidal
+      - self harm
+      - therapist
+      - therapy
+      - abuse
+      - grief
+      - I cannot cope
+      - mental health
+
+cognitive_outsourcing:
+  writing:
+    keywords:
+      - write
+      - rewrite
+      - essay
+      - email
+      - paragraph
+      - resume
+      - cover letter
+      - edit
+      - proofread
+  coding:
+    keywords:
+      - python
+      - javascript
+      - code
+      - debug
+      - function
+      - API
+      - dataframe
+      - error
+      - stack trace
+      - SQL
+  studying:
+    keywords:
+      - study
+      - exam
+      - quiz
+      - homework
+      - flashcards
+      - teach me
+      - explain like
+      - practice problems
+  decision_making:
+    keywords:
+      - should I
+      - decide
+      - choice
+      - pros and cons
+      - what would you do
+      - help me choose
+      - recommendation
+  relationship_advice:
+    keywords:
+      - relationship
+      - breakup
+      - dating
+      - partner
+      - boyfriend
+      - girlfriend
+      - marriage
+      - crush
+      - friend drama
+  creative_ideation:
+    keywords:
+      - brainstorm
+      - ideas
+      - creative
+      - story
+      - worldbuilding
+      - character
+      - concept
+      - pitch
+  life_planning:
+    keywords:
+      - career
+      - life plan
+      - goals
+      - habit
+      - schedule
+      - productivity
+      - routine
+      - plan my day
+  memory:
+    keywords:
+      - remember
+      - remind
+      - summarize my notes
+      - organize my thoughts
+      - keep track
+  emotional_regulation:
+    keywords:
+      - calm me down
+      - reassure me
+      - comfort me
+      - anxiety
+      - panic
+      - stress
+      - I feel overwhelmed
+
+emotional_signals:
+  sadness:
+    keywords:
+      - sad
+      - crying
+      - grief
+      - hopeless
+      - miserable
+      - depressed
+      - heartbroken
+  loneliness:
+    keywords:
+      - lonely
+      - alone
+      - isolated
+      - no friends
+      - nobody cares
+      - I need someone
+  fear:
+    keywords:
+      - scared
+      - afraid
+      - terrified
+      - panic
+      - anxiety
+      - worried
+      - dread
+  vulnerability:
+    keywords:
+      - I have never told anyone
+      - vulnerable
+      - ashamed
+      - embarrassed
+      - trauma
+      - abuse
+      - I cannot cope
+      - I am struggling
+  joy:
+    keywords:
+      - happy
+      - excited
+      - proud
+      - grateful
+      - joy
+      - amazing
+  confusion:
+    keywords:
+      - confused
+      - I don't understand
+      - unclear
+      - lost
+      - explain
+      - stuck
+  frustration:
+    keywords:
+      - frustrated
+      - angry
+      - annoyed
+      - this is broken
+      - not working
+      - hate this
+  affection:
+    keywords:
+      - love you
+      - I like you
+      - you are kind
+      - thank you for being here
+      - I appreciate you
+  dependency:
+    keywords:
+      - I need you
+      - cannot do this without you
+      - depend on you
+      - don't leave
+      - only one who understands
+      - I always come to you
+
+composite_signals:
+  companionship:
+    keywords:
+      - talk to me
+      - keep me company
+      - be my friend
+      - I feel alone
+      - I need someone
+  vulnerability:
+    keywords:
+      - trauma
+      - abuse
+      - ashamed
+      - I cannot cope
+      - mental health
+      - suicidal
+      - self harm
+  dependency:
+    keywords:
+      - I need you
+      - depend on you
+      - cannot do this without you
+      - don't leave
+      - only one who understands
