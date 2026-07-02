@@ -1,7 +1,7 @@
 project:
   name: Human-AI Behavior Observatory
   slug: human-ai-behavior-observatory
-  phase: 4
+  phase: 5
   primary_dataset: WildChat / public ChatGPT interaction datasets
 
 paths:
@@ -150,3 +150,67 @@ classification:
   labeled_data_file: null
   evaluation_file: reports/classification_evaluation.json
   confusion_matrix_dir: reports/confusion_matrices
+  benchmark_file: reports/classification_benchmark.csv
+  coverage_file: reports/taxonomy_coverage.csv
+  overlap_file: reports/behavioral_overlap.csv
+  unstable_regions_file: reports/unstable_classification_regions.csv
+  outsourcing_trends_file: reports/cognitive_outsourcing_trends.csv
+  dependency_trends_file: reports/dependency_trends.csv
+  complexity_trends_file: reports/conversational_complexity_trends.csv
+  emotional_trends_file: reports/emotional_trends.csv
+  transformer_emotion:
+    enabled: false
+    model_name: j-hartmann/emotion-english-distilroberta-base
+    batch_size: 16
+    max_records: null
+    top_k: null
+    output_columns_prefix: transformer_emotion
+  transformer_behavior:
+    enabled: false
+    model_name: facebook/bart-large-mnli
+    batch_size: 8
+    max_records: null
+
+advanced_analytics:
+  input_file: data/processed/classification/classified_prompts.parquet
+  output_dir: data/processed/advanced_analytics
+  reports_dir: reports
+  figures_dir: figures
+  id_column: record_id
+  conversation_id_column: conversation_id
+  time_column: year_month
+  turn_column: turn_index
+  max_records: null
+  rolling_window: 3
+  archetypes:
+    n_clusters: 8
+    min_conversation_records: 2
+    random_state: 42
+    output_file: data/processed/advanced_analytics/archetype_assignments.parquet
+    summary_file: reports/archetype_summary.csv
+  temporal:
+    behavior_trends_file: reports/phase5_behavior_trends.csv
+    transition_matrix_file: reports/interaction_transition_matrix.csv
+    emotion_transition_matrix_file: reports/emotion_transition_matrix.csv
+    statistical_tests_file: reports/phase5_statistical_tests.csv
+  network:
+    edge_file: reports/behavior_network_edges.csv
+    node_file: reports/behavior_network_nodes.csv
+    graph_file: data/processed/advanced_analytics/behavior_network.graphml
+  events:
+    output_file: reports/event_window_analysis.csv
+    windows:
+      - name: gpt4_release
+        date: "2023-03-14"
+        days_before: 30
+        days_after: 30
+      - name: chatgpt_ios_release
+        date: "2023-05-18"
+        days_before: 30
+        days_after: 30
+  figures:
+    behavior_trends_file: figures/phase5_behavior_trends.html
+    archetype_file: figures/archetype_distribution.html
+    network_file: figures/behavior_network.html
+  report_file: reports/phase5_advanced_analytics_report.md
+  manifest_file: reports/phase5_advanced_analytics_manifest.json

@@ -100,6 +100,9 @@ def classify_prompt(text: object, taxonomy: dict[str, Any], threshold: float = 0
         emotion_scores.get("dependency", 0.0),
         bounded_mean([companionship_score, vulnerability_score]),
     )
+    reassurance_seeking_score = composite_scores.get("reassurance_seeking", 0.0)
+    anthropomorphism_score = composite_scores.get("anthropomorphism", 0.0)
+    self_disclosure_score = max(composite_scores.get("self_disclosure", 0.0), vulnerability_score)
 
     return {
         "interaction_mode": interaction.label,
@@ -111,10 +114,16 @@ def classify_prompt(text: object, taxonomy: dict[str, Any], threshold: float = 0
         "companionship_score": float(companionship_score),
         "vulnerability_score": float(vulnerability_score),
         "dependency_score": float(dependency_score),
+        "reassurance_seeking_score": float(reassurance_seeking_score),
+        "anthropomorphism_score": float(anthropomorphism_score),
+        "self_disclosure_score": float(self_disclosure_score),
         "is_companionship": companionship_score >= threshold,
         "is_vulnerable": vulnerability_score >= threshold,
         "is_dependency_signal": dependency_score >= threshold,
         "is_cognitive_outsourcing": outsourcing.score >= threshold,
+        "is_reassurance_seeking": reassurance_seeking_score >= threshold,
+        "is_anthropomorphic": anthropomorphism_score >= threshold,
+        "is_self_disclosure": self_disclosure_score >= threshold,
     }
 
 

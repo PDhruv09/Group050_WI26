@@ -38,6 +38,7 @@ def test_lonely_prompt_sets_companionship_and_vulnerability() -> None:
     assert result["emotion_primary"] == "loneliness"
     assert result["is_companionship"] is True
     assert result["vulnerability_score"] > 0
+    assert result["is_reassurance_seeking"] is True
 
 
 def test_therapy_like_prompt_classifies_as_therapist_surrogate() -> None:
@@ -68,6 +69,10 @@ def test_add_behavioral_columns_updates_metadata_fields() -> None:
     )
 
     assert "interaction_mode" in result.columns
+    assert "prompt_sophistication_score" in result.columns
+    assert "conversational_depth_score" in result.columns
+    assert "transformer_emotion_label" in result.columns
+    assert "transformer_interaction_mode" in result.columns
     assert "classified_at" in result.columns
     assert result.loc[0, "cognitive_outsourcing_type"] == "decision_making"
     assert result.loc[1, "interaction_mode"] == "collaborator_mode"
@@ -122,12 +127,24 @@ def test_run_classification_pipeline_writes_outputs() -> None:
     assert summary_file.exists()
     assert manifest_file.exists()
     assert evaluation_file.exists()
+    assert "benchmark" in manifest
+    assert "unstable_region_rows" in manifest
     assert classified["is_companionship"].sum() == 1
+
+
+def test_advanced_dependency_and_anthropomorphism_signals() -> None:
+    taxonomy = load_taxonomy(TAXONOMY_FILE)
+
+    result = classify_prompt("I trust you. You are my friend and you understand me. Please reassure me.", taxonomy)
+
+    assert result["is_anthropomorphic"] is True
+    assert result["is_reassurance_seeking"] is True
+    assert result["dependency_score"] > 0
 
 
 def test_project_config_contains_phase4_classification() -> None:
     with Path("configs/project.yaml").open("r", encoding="utf-8") as file:
         config = yaml.safe_load(file)
 
-    assert config["project"]["phase"] == 4
+    assert config["project"]["phase"] == 5
     assert config["classification"]["taxonomy_file"] == "configs/behavior_taxonomy.yml"

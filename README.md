@@ -17,9 +17,9 @@ The project investigates how people use conversational AI over time, with emphas
 - conversational depth,
 - behavioral network structure.
 
-## Phase 4 Status
+## Phase 5 Status
 
-Phase 4 adds behavioral classification infrastructure on top of the Phase 2 canonical prompt-level dataset and Phase 3 semantic outputs.
+Phase 5 adds advanced behavioral analytics on top of the Phase 2 canonical dataset, Phase 3 semantic outputs, and Phase 4 behavioral classifications.
 
 Current infrastructure includes:
 
@@ -49,12 +49,25 @@ Current infrastructure includes:
 - standalone UMAP/HDBSCAN clustering,
 - topic validation and summaries,
 - semantic visualizations,
-- rule-based behavioral taxonomy,
+- behavioral taxonomy,
 - interaction mode classification,
 - cognitive outsourcing classification,
 - emotional signal classification,
+- optional transformer-assisted emotion classification,
+- optional zero-shot transformer behavioral classification,
 - companionship, vulnerability, and dependency scores,
+- anthropomorphism, reassurance-seeking, and self-disclosure indicators,
+- prompt sophistication and conversational depth metrics,
+- temporal behavioral trend reports,
+- taxonomy coverage, overlap, unstable-region, and benchmark artifacts,
 - classification summaries and evaluation scaffolding,
+- Phase 5 temporal evolution analysis,
+- interaction and emotion transition matrices,
+- conversation archetype discovery,
+- behavioral network analysis,
+- event-window analysis,
+- statistical trend testing,
+- Phase 5 interactive figures and markdown report,
 - module directories for future analysis systems.
 
 ## Repository Layout
@@ -74,6 +87,7 @@ src/
   embeddings/
   clustering/
   classification/
+  advanced_analytics/
   emotion_analysis/
   temporal_analysis/
   semantic_drift/
@@ -217,7 +231,35 @@ Run a smaller development sample:
 python -m src.classification.run_classification --config configs/project.yaml --max-records 10000
 ```
 
-The classifier writes a behavioral dataset, classification summary, manifest, and evaluation diagnostics using the taxonomy in `configs/behavior_taxonomy.yml`.
+Run optional transformer-assisted emotion classification:
+
+```bash
+python -m src.classification.run_classification --config configs/project.yaml --max-records 10000 --enable-transformers --transformer-max-records 1000
+```
+
+Run optional zero-shot transformer-assisted behavior classification:
+
+```bash
+python -m src.classification.run_classification --config configs/project.yaml --max-records 1000 --enable-zero-shot-behavior --zero-shot-max-records 100
+```
+
+The classifier writes a behavioral dataset, classification summary, manifest, benchmark, trend reports, taxonomy coverage diagnostics, overlap diagnostics, unstable-region diagnostics, and evaluation outputs using the taxonomy in `configs/behavior_taxonomy.yml`.
+
+## Advanced Analytics
+
+Run Phase 5 on a development sample:
+
+```bash
+python -m src.advanced_analytics.run_phase5_analytics --config configs/project.yaml --max-records 10000
+```
+
+Run Phase 5 on the full classified dataset:
+
+```bash
+python -m src.advanced_analytics.run_phase5_analytics --config configs/project.yaml
+```
+
+Phase 5 writes temporal trends, transition matrices, archetype summaries, behavioral network outputs, event-window analysis, statistical tests, interactive figures, a manifest, and a markdown report.
 
 ## Data Policy
 

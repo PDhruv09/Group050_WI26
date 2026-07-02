@@ -204,6 +204,7 @@ data/metadata/preprocessing_registry.json
 reports/*.csv
 reports/*.json
 reports/topic_summaries.md
+reports/phase5_advanced_analytics_report.md
 figures/*.html
 
 data/raw/*
