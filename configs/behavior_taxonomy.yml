@@ -271,3 +271,31 @@ composite_signals:
       - cannot do this without you
       - don't leave
       - only one who understands
+  reassurance_seeking:
+    keywords:
+      - reassure me
+      - tell me it will be okay
+      - am I okay
+      - is this normal
+      - comfort me
+      - calm me down
+      - validate my feelings
+  anthropomorphism:
+    keywords:
+      - do you care
+      - are you real
+      - you understand me
+      - you are my friend
+      - you know me
+      - you have feelings
+      - I trust you
+      - you are always there
+  self_disclosure:
+    keywords:
+      - I have never told anyone
+      - this is personal
+      - I am ashamed
+      - I feel vulnerable
+      - my secret
+      - I am struggling
+      - I do not tell people
