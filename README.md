@@ -17,9 +17,9 @@ The project investigates how people use conversational AI over time, with emphas
 - conversational depth,
 - behavioral network structure.
 
-## Phase 5 Status
+## Phase 6 Status
 
-Phase 5 adds advanced behavioral analytics on top of the Phase 2 canonical dataset, Phase 3 semantic outputs, and Phase 4 behavioral classifications.
+Phase 6 adds an interactive dashboard on top of the Phase 2 canonical dataset, Phase 3 semantic outputs, Phase 4 behavioral classifications, and Phase 5 advanced analytics.
 
 Current infrastructure includes:
 
@@ -68,6 +68,10 @@ Current infrastructure includes:
 - event-window analysis,
 - statistical trend testing,
 - Phase 5 interactive figures and markdown report,
+- Streamlit dashboard,
+- dashboard filters and prompt explorer,
+- dashboard diagnostics manifest,
+- interactive behavioral trend, transition, archetype, and network views,
 - module directories for future analysis systems.
 
 ## Repository Layout
@@ -260,6 +264,22 @@ python -m src.advanced_analytics.run_phase5_analytics --config configs/project.y
 ```
 
 Phase 5 writes temporal trends, transition matrices, archetype summaries, behavioral network outputs, event-window analysis, statistical tests, interactive figures, a manifest, and a markdown report.
+
+## Dashboard
+
+Generate dashboard readiness metadata:
+
+```bash
+python -m src.dashboard.run_dashboard_manifest --config configs/project.yaml
+```
+
+Run the Phase 6 dashboard:
+
+```bash
+streamlit run dashboard/app.py
+```
+
+The dashboard provides filters, KPIs, behavioral trends, transition heatmaps, archetype summaries, network views, event-window outputs, prompt exploration, and artifact diagnostics.
 
 ## Data Policy
 

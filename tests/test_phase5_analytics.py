@@ -59,7 +59,7 @@ def test_phase5_config_exists() -> None:
     with Path("configs/project.yaml").open("r", encoding="utf-8") as file:
         config = yaml.safe_load(file)
 
-    assert config["project"]["phase"] == 5
+    assert config["project"]["phase"] == 6
     assert "advanced_analytics" in config
 
 
