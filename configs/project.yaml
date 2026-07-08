@@ -1,7 +1,7 @@
 project:
   name: Human-AI Behavior Observatory
   slug: human-ai-behavior-observatory
-  phase: 5
+  phase: 6
   primary_dataset: WildChat / public ChatGPT interaction datasets
 
 paths:
@@ -214,3 +214,27 @@ advanced_analytics:
     network_file: figures/behavior_network.html
   report_file: reports/phase5_advanced_analytics_report.md
   manifest_file: reports/phase5_advanced_analytics_manifest.json
+
+dashboard:
+  app_file: dashboard/app.py
+  page_title: Human-AI Behavior Observatory
+  page_icon: HA
+  max_prompt_rows: 50000
+  default_sample_rows: 10000
+  sample_random_state: 42
+  sample_file: data/processed/dashboard/classified_prompt_dashboard_sample.parquet
+  sample_rows: 50000
+  classified_data_file: data/processed/classification/classified_prompts.parquet
+  behavior_trends_file: reports/phase5_behavior_trends.csv
+  interaction_transition_file: reports/interaction_transition_matrix.csv
+  emotion_transition_file: reports/emotion_transition_matrix.csv
+  archetype_summary_file: reports/archetype_summary.csv
+  archetype_assignments_file: data/processed/advanced_analytics/archetype_assignments.parquet
+  network_nodes_file: reports/behavior_network_nodes.csv
+  network_edges_file: reports/behavior_network_edges.csv
+  event_window_file: reports/event_window_analysis.csv
+  taxonomy_coverage_file: reports/taxonomy_coverage.csv
+  classification_summary_file: reports/classification_summary.csv
+  classification_benchmark_file: reports/classification_benchmark.csv
+  phase5_manifest_file: reports/phase5_advanced_analytics_manifest.json
+  output_manifest_file: reports/dashboard_manifest.json

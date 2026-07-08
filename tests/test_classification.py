@@ -146,5 +146,5 @@ def test_project_config_contains_phase4_classification() -> None:
     with Path("configs/project.yaml").open("r", encoding="utf-8") as file:
         config = yaml.safe_load(file)
 
-    assert config["project"]["phase"] == 5
+    assert config["project"]["phase"] == 6
     assert config["classification"]["taxonomy_file"] == "configs/behavior_taxonomy.yml"
